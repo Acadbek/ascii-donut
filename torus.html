@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Torus</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: monospace;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+<pre id="torus"></pre>
+
+<script>
+const width = 80;
+const height = 40;
+const output = Array(width * height).fill(" ");
+
+for (let j = 0; j < 2 * Math.PI; j += 0.3) {   
+  for (let i = 0; i < 2 * Math.PI; i += 0.1) {
+    const x = Math.floor(width / 2  + (10 + 5 * Math.cos(i)) * Math.cos(j));
+    const y = Math.floor(height / 2 + (10 + 5 * Math.cos(i)) * Math.sin(j));
+
+    if (x >= 0 && x < width && y >= 0 && y < height) {
+      output[x + width * y] = "@";
+    }
+  }
+}
+
+let result = "";
+for (let y = 0; y < height; y++) {
+  for (let x = 0; x < width; x++) {
+    result += output[x + width * y];
+  }
+  result += "\n";
+}
+document.getElementById("torus").textContent = result;
+</script>
+</body>
+</html>

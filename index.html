@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        pre {
+            white-space: pre;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <pre id="donut"></pre>
+
+    <script>
+        let A = 0, B = 0;
+        const donutElement = document.getElementById("donut");
+
+        function renderFrame() {
+            const b = Array(1760).fill(" ");
+            const z = Array(1760).fill(0);
+
+
+            for (let j = 0; j < 6.28; j += 0.07) {
+                for (let i = 0; i < 6.28; i += 0.02) {
+                    const c = Math.sin(i);
+                    const d = Math.cos(j);
+                    const e = Math.sin(A);
+                    const f = Math.sin(j);
+                    const g = Math.cos(A);
+                    const h = d + 2;
+
+                    const D = 1 / (c * h * e + f * g + 5);
+                    const l = Math.cos(i);
+                    const m = Math.cos(B);
+                    const n = Math.sin(B);
+
+                    const t = c * h * g - f * e;
+
+                    const x = Math.floor(40 + 30 * D * (l * h * m - t * n));
+                    const y = Math.floor(12 + 15 * D * (l * h * n + t * m));
+                    const o = x + 80 * y;
+
+                    const N = Math.floor(8 * ((f * e - c * d * g) * m - c * d * e - f * g - l * d * n));
+
+                    if (y >= 0 && y < 22 && x >= 0 && x < 80 && D > z[o]) {
+                        z[o] = D;
+                        b[o] = ".,-~:;=!*#$@"[N > 0 ? N : 0];
+                    }
+                }
+
+            }
+
+            let output = "";
+            for (let k = 0; k < 1760; k++) {
+                output += (k % 80) ? b[k] : "\n";
+            }
+            donutElement.textContent = output;
+
+            A += 0.04;
+            B += 0.02;
+        }
+
+        setInterval(renderFrame, 50);
+    </script>
+</body>
+</html>
